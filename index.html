@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -194,25 +192,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
   </div>
 </nav>
 
-<!-- IMAGE SETUP (collapsible) -->
-<details id="setup-panel" style="max-width:1100px;margin:72px auto 0;background:#0d1a2e;border:1px solid rgba(29,63,173,0.3);border-radius:8px;padding:0 20px">
-  <summary style="font-size:13px;font-weight:600;color:#6b8fff;cursor:pointer;padding:14px 0;list-style:none">▸ Project image setup — click to expand</summary>
-  <div style="padding-bottom:16px">
-    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Drop each project cover into its slot. Images embed directly — no hosting needed.</p>
-    <div class="drop-grid">
-      <div class="drop-zone" id="dz-mekora"><input type="file" accept="image/*" data-key="mekora"><div class="dz-label">Liquid Ledger / Mekora</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-      <div class="drop-zone" id="dz-kosmo"><input type="file" accept="image/*" data-key="kosmo"><div class="dz-label">Kosmo</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-      <div class="drop-zone" id="dz-maknet"><input type="file" accept="image/*" data-key="maknet"><div class="dz-label">Maknet</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-      <div class="drop-zone" id="dz-snd"><input type="file" accept="image/*" data-key="snd"><div class="dz-label">Space Next Door</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-      <div class="drop-zone" id="dz-wefresh"><input type="file" accept="image/*" data-key="wefresh"><div class="dz-label">WeFresh</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-      <div class="drop-zone" id="dz-secretum"><input type="file" accept="image/*" data-key="secretum"><div class="dz-label">Secretum</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
-    </div>
-    <div id="setup-actions">
-      <button id="setup-done-btn" onclick="applyImages()">Apply images ✓</button>
-      <span id="setup-count" style="font-size:12px;color:var(--text3)">0 / 6 loaded</span>
-    </div>
-  </div>
-</details>
+<!-- images loaded from github repo files -->
 
 <!-- ═══ HERO ═══ -->
 <div class="hero">
@@ -448,7 +428,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
     <div class="port-grid">
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-mekora" src="" alt="Liquid Ledger / Mekora"></div>
+        <div class="port-thumb"><img id="img-mekora" src="img-mekora.png" alt="Liquid Ledger / Mekora"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">Web3</span><span class="port-tag">Design System</span><span class="port-tag">E-commerce</span></div>
           <div class="port-title">Liquid Ledger — Bespoke Product Studio</div>
@@ -461,7 +441,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
       </div>
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-kosmo" src="" alt="Kosmo"></div>
+        <div class="port-thumb"><img id="img-kosmo" src="img-kosmo.png" alt="Kosmo"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">UX/UI</span><span class="port-tag">Responsive</span><span class="port-tag">Logistics</span></div>
           <div class="port-title">Kosmo — UX/UI &amp; Responsive Design</div>
@@ -471,7 +451,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
       </div>
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-maknet" src="" alt="Maknet"></div>
+        <div class="port-thumb"><img id="img-maknet" src="img-maknet.png" alt="Maknet"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">Prototyping</span><span class="port-tag">User Interview</span><span class="port-tag">B2B</span></div>
           <div class="port-title">Maknet — Prototype &amp; User Research</div>
@@ -481,7 +461,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
       </div>
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-snd" src="" alt="Space Next Door"></div>
+        <div class="port-thumb"><img id="img-snd" src="img-snd.png" alt="Space Next Door"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">Responsive</span><span class="port-tag">Booking App</span><span class="port-tag">3 Markets</span></div>
           <div class="port-title">Space Next Door — Website &amp; Booking App</div>
@@ -494,7 +474,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
       </div>
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-wefresh" src="" alt="WeFresh"></div>
+        <div class="port-thumb"><img id="img-wefresh" src="img-wefresh.png" alt="WeFresh"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">B2C/B2B</span><span class="port-tag">Grocery</span><span class="port-tag">Merchant App</span></div>
           <div class="port-title">WeFresh — Grocery Platform &amp; Merchant App</div>
@@ -508,7 +488,7 @@ footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0
       </div>
 
       <div class="port-card">
-        <div class="port-thumb"><img id="img-secretum" src="" alt="Secretum"></div>
+        <div class="port-thumb"><img id="img-secretum" src="img-secretum.png" alt="Secretum"></div>
         <div class="port-body">
           <div class="port-tags"><span class="port-tag">Web3</span><span class="port-tag">UX/UI</span><span class="port-tag">Responsive</span></div>
           <div class="port-title">Secretum — Web3 Communication Platform</div>
