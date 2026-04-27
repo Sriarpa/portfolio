@@ -1,1 +1,626 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sriarpa Janlakha — Senior UI/UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#09090b;--surface:#111115;--raised:#18181c;--text:#f4f4f5;--text2:#a1a1aa;--text3:#52525b;--accent:#1d3fad;--accent2:#3358d4;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--green:#4ade80}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;font-size:15px;line-height:1.6}
+a{color:var(--accent2);text-decoration:none}
+a:hover{color:var(--text)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,9,11,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:700;font-size:18px;letter-spacing:-0.5px;color:var(--text)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text2);font-size:14px;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.btn-dl{border:1px solid var(--border2);color:var(--text2);padding:7px 16px;border-radius:4px;font-size:13px;font-weight:600;transition:all .15s;cursor:pointer;background:transparent;font-family:'Manrope',sans-serif}
+.btn-dl:hover{border-color:var(--text2);color:var(--text)}
+.hire-btn{background:var(--accent);color:#fff;padding:8px 20px;border-radius:4px;font-size:13px;font-weight:600;transition:background .15s}
+.hire-btn:hover{background:var(--accent2);color:#fff}
+
+/* ── SETUP PANEL ── */
+#setup-panel{background:#0d1a2e;border:1px solid rgba(29,63,173,0.4);border-radius:8px;padding:20px 24px;max-width:1100px;margin:72px auto 0;padding-top:16px}
+#setup-panel summary{font-size:13px;font-weight:600;color:#6b8fff;cursor:pointer;user-select:none;padding:8px 0}
+.drop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.drop-zone{border:1.5px dashed rgba(29,63,173,0.4);border-radius:6px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:rgba(29,63,173,0.04)}
+.drop-zone:hover,.drop-zone.drag-over{border-color:#6b8fff;background:rgba(29,63,173,0.1)}
+.drop-zone.done{border-color:var(--green);background:rgba(74,222,128,0.05)}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-zone .dz-label{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px}
+.drop-zone .dz-hint{font-size:11px;color:var(--text3)}
+.drop-zone.done .dz-hint{color:var(--green)}
+.drop-zone img.preview{width:100%;height:48px;object-fit:cover;border-radius:3px;margin-top:4px;display:none}
+.drop-zone.done img.preview{display:block}
+#setup-actions{display:flex;align-items:center;gap:12px;margin-top:12px}
+#setup-done-btn{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;opacity:.4;pointer-events:none;transition:all .2s;font-family:'Manrope',sans-serif}
+#setup-done-btn.ready{opacity:1;pointer-events:all}
+#setup-done-btn.ready:hover{background:var(--accent2)}
+#setup-count{font-size:12px;color:var(--text3)}
+
+/* ── HERO ── */
+.hero{max-width:1100px;margin:0 auto;padding:40px 40px 72px;display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:start}
+
+/* badges row */
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.open-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,63,173,0.12);border:1px solid rgba(29,63,173,0.3);color:#6b8fff;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.4px}
+.open-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%}
+.domain-badge{display:inline-flex;align-items:center;background:rgba(255,255,255,0.04);border:1px solid var(--border2);color:var(--text3);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500}
+
+h1{font-size:44px;font-weight:700;line-height:1.1;letter-spacing:-1px;margin-bottom:4px}
+h1 span{color:var(--text2);font-weight:400}
+.role-tag{font-size:19px;color:var(--accent2);font-weight:600;margin-bottom:4px}
+.current-at{font-size:13px;color:var(--text3);margin-bottom:20px;font-family:'DM Mono',monospace}
+.current-at span{color:var(--text2)}
+.bio{color:var(--text2);font-size:14px;line-height:1.7;max-width:520px;margin-bottom:20px}
+
+/* tools strip */
+.tools-strip{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tool-pill{font-size:12px;padding:3px 10px;border-radius:4px;background:var(--raised);border:1px solid var(--border2);color:var(--text2);font-weight:500}
+.tool-pill.primary{background:rgba(29,63,173,0.12);border-color:rgba(29,63,173,0.3);color:#6b8fff}
+.tools-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;font-weight:600;align-self:center;margin-right:4px}
+
+.stats{display:flex;gap:28px;margin-bottom:28px}
+.stat-num{font-size:26px;font-weight:700;color:var(--text);line-height:1}
+.stat-label{font-size:11px;color:var(--text3);margin-top:3px;text-transform:uppercase;letter-spacing:.8px}
+
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:11px 22px;border-radius:4px;font-weight:600;font-size:14px;transition:background .15s;display:inline-block}
+.btn-primary:hover{background:var(--accent2);color:#fff}
+.btn-ghost{border:1px solid var(--border2);color:var(--text2);padding:11px 22px;border-radius:4px;font-weight:500;font-size:14px;transition:all .15s}
+.btn-ghost:hover{border-color:var(--text2);color:var(--text)}
+.btn-dl-hero{border:1px solid rgba(74,222,128,0.3);color:var(--green);padding:11px 22px;border-radius:4px;font-weight:600;font-size:14px;transition:all .15s;background:rgba(74,222,128,0.05)}
+.btn-dl-hero:hover{background:rgba(74,222,128,0.1);color:var(--green);border-color:var(--green)}
+
+/* ── INFO CARD ── */
+.info-card{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:22px;position:sticky;top:68px}
+.info-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.info-card h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600}
+.avail-pill{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);color:var(--green);font-weight:600;letter-spacing:.3px}
+.contact-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.contact-row:last-of-type{border-bottom:none}
+.c-icon{width:30px;height:30px;background:var(--raised);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.c-label{font-size:10px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px}
+.c-val{font-size:12px;color:var(--text)}
+.c-val a{color:var(--text);word-break:break-all}
+.c-val a:hover{color:var(--accent2)}
+.avail-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.avail-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.avail-key{font-size:11px;color:var(--text3)}
+.avail-val{font-size:11px;color:var(--text2);font-weight:500}
+.dl-card-btn{display:block;margin-top:14px;background:rgba(29,63,173,0.12);border:1px solid rgba(29,63,173,0.25);color:#6b8fff;padding:9px 14px;border-radius:4px;font-size:12px;font-weight:600;text-align:center;transition:all .15s;cursor:pointer}
+.dl-card-btn:hover{background:rgba(29,63,173,0.2);color:#8aabff}
+
+/* ── TICKER ── */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;background:var(--surface)}
+.ticker{display:flex;animation:ticker 32s linear infinite;width:max-content}
+.ticker:hover{animation-play-state:paused}
+.tick-item{display:flex;align-items:center;gap:8px;padding:0 20px;color:var(--text2);font-size:13px;font-weight:500;white-space:nowrap}
+.tick-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+section{max-width:1100px;margin:0 auto;padding:72px 40px}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);font-weight:600;margin-bottom:6px}
+.section-title{font-size:30px;font-weight:700;letter-spacing:-.5px;margin-bottom:40px}
+
+/* ── EXPERIENCE ── */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{display:grid;grid-template-columns:210px 1fr;gap:36px;padding:36px 0;border-top:1px solid var(--border)}
+.exp-meta{padding-top:2px}
+.exp-period{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:8px;line-height:1.4}
+.exp-badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.badge{font-size:10px;padding:3px 9px;border-radius:100px;font-weight:500;border:1px solid}
+.badge-loc{background:rgba(29,63,173,0.1);border-color:rgba(29,63,173,0.25);color:#6b8fff}
+.badge-team{background:rgba(255,255,255,0.04);border-color:var(--border2);color:var(--text3)}
+.exp-role{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+.exp-company{font-size:21px;font-weight:700;color:var(--text);margin-bottom:1px;line-height:1.2}
+.exp-company-sub{font-size:12px;color:var(--text3);margin-bottom:14px}
+.exp-achievements{list-style:none;display:flex;flex-direction:column;gap:7px}
+.exp-achievements li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.5}
+.exp-achievements li::before{content:'→';position:absolute;left:0;color:var(--text3);font-size:11px;top:2px}
+.exp-achievements li strong{color:var(--text);font-weight:600}
+.exp-note{font-size:12px;color:var(--text3);font-style:italic;margin-top:8px;padding-left:16px}
+
+/* ── PORTFOLIO ── */
+.port-section-bg{background:var(--surface);width:100%}
+.port-inner{max-width:1100px;margin:0 auto;padding:72px 40px}
+.port-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.port-card{background:var(--bg);border:1px solid var(--border2);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s}
+.port-card:hover{border-color:rgba(29,63,173,0.5)}
+.port-thumb{height:175px;overflow:hidden;border-bottom:1px solid var(--border);background:var(--raised);display:flex;align-items:center;justify-content:center}
+.port-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .3s}
+.port-card:hover .port-thumb img{transform:scale(1.03)}
+.port-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.port-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.port-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(29,63,173,0.1);color:#6b8fff;font-weight:500}
+.port-title{font-size:16px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.port-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px;flex:1}
+.port-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:auto}
+.port-link{font-size:12px;color:var(--accent2);font-weight:600}
+.port-link:hover{color:var(--text)}
+.port-link-sec{font-size:12px;color:var(--text3);font-weight:500}
+.port-link-sec:hover{color:var(--text2)}
+.port-more{border:1px dashed var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;min-height:180px}
+.port-more-inner{text-align:center;padding:32px 20px}
+.port-more-inner .big{font-size:20px;font-weight:700;color:var(--text2);margin-bottom:6px}
+.port-more-inner p{font-size:13px;color:var(--text3);line-height:1.6;margin-bottom:14px}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.skill-group{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px}
+.skill-group-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);font-weight:600;margin-bottom:12px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:5px}
+.skill-tag{font-size:11px;padding:3px 9px;border-radius:4px;background:var(--raised);border:1px solid var(--border);color:var(--text2);font-weight:500}
+
+/* ── EDUCATION ── */
+.edu-card{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:28px;display:flex;align-items:flex-start;gap:20px;max-width:580px}
+.edu-icon{width:44px;height:44px;background:var(--raised);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.edu-degree{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent2);font-weight:600;margin-bottom:3px}
+.edu-school{font-size:18px;font-weight:700;color:var(--text);margin-bottom:3px}
+.edu-field{font-size:13px;color:var(--text2);margin-bottom:3px}
+.edu-period{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3)}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-left .name{font-size:17px;font-weight:700}
+.footer-left .tag{font-size:12px;color:var(--text3);margin-top:3px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:var(--text3);transition:color .15s}
+.footer-links a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SJ·</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-dl" onclick="downloadCV()">↓ Download CV</button>
+    <a href="mailto:sriarpa.jan@gmail.com" class="hire-btn">Hire Me</a>
+  </div>
+</nav>
+
+<!-- IMAGE SETUP (collapsible) -->
+<details id="setup-panel" style="max-width:1100px;margin:72px auto 0;background:#0d1a2e;border:1px solid rgba(29,63,173,0.3);border-radius:8px;padding:0 20px">
+  <summary style="font-size:13px;font-weight:600;color:#6b8fff;cursor:pointer;padding:14px 0;list-style:none">▸ Project image setup — click to expand</summary>
+  <div style="padding-bottom:16px">
+    <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Drop each project cover into its slot. Images embed directly — no hosting needed.</p>
+    <div class="drop-grid">
+      <div class="drop-zone" id="dz-mekora"><input type="file" accept="image/*" data-key="mekora"><div class="dz-label">Liquid Ledger / Mekora</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+      <div class="drop-zone" id="dz-kosmo"><input type="file" accept="image/*" data-key="kosmo"><div class="dz-label">Kosmo</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+      <div class="drop-zone" id="dz-maknet"><input type="file" accept="image/*" data-key="maknet"><div class="dz-label">Maknet</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+      <div class="drop-zone" id="dz-snd"><input type="file" accept="image/*" data-key="snd"><div class="dz-label">Space Next Door</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+      <div class="drop-zone" id="dz-wefresh"><input type="file" accept="image/*" data-key="wefresh"><div class="dz-label">WeFresh</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+      <div class="drop-zone" id="dz-secretum"><input type="file" accept="image/*" data-key="secretum"><div class="dz-label">Secretum</div><div class="dz-hint">Click or drop</div><img class="preview" alt=""></div>
+    </div>
+    <div id="setup-actions">
+      <button id="setup-done-btn" onclick="applyImages()">Apply images ✓</button>
+      <span id="setup-count" style="font-size:12px;color:var(--text3)">0 / 6 loaded</span>
+    </div>
+  </div>
+</details>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div>
+    <!-- Status badges -->
+    <div class="badge-row">
+      <span class="open-badge">Open to Full-Time Roles</span>
+      <span class="domain-badge">E-commerce</span>
+      <span class="domain-badge">Web3</span>
+      <span class="domain-badge">Logistics</span>
+      <span class="domain-badge">Real Estate</span>
+    </div>
+
+    <h1>Sriarpa Janlakha <span>(May)</span></h1>
+    <div class="role-tag">Senior UI/UX Designer</div>
+    <div class="current-at">Currently at <span>Liquid Ledger</span> · Remote · Bangkok / Open to Relocation</div>
+
+    <p class="bio">Building user-centred products for startups and global brands across e-commerce, Web3, real estate, and logistics. Skilled in design systems, cross-functional collaboration, and AI-accelerated workflows.</p>
+
+    <!-- Key tools — visible immediately -->
+    <div class="tools-strip">
+      <span class="tools-label">Tools</span>
+      <span class="tool-pill primary">Figma</span>
+      <span class="tool-pill primary">Miro</span>
+      <span class="tool-pill primary">Framer</span>
+      <span class="tool-pill">After Effects</span>
+      <span class="tool-pill">Overflow</span>
+      <span class="tool-pill">Zeplin</span>
+      <span class="tool-pill">Dovetail</span>
+      <span class="tool-pill">Midjourney</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div><div class="stat-num">10+</div><div class="stat-label">Yrs Visual Design</div></div>
+      <div><div class="stat-num">4+</div><div class="stat-label">Yrs UX/UI</div></div>
+      <div><div class="stat-num">8</div><div class="stat-label">Companies</div></div>
+      <div><div class="stat-num">5</div><div class="stat-label">Domains</div></div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="https://www.behance.net/sriarpa" target="_blank" class="btn-primary">View Portfolio →</a>
+      <a href="https://www.linkedin.com/in/sriarpa-janlakha/" target="_blank" class="btn-ghost">LinkedIn</a>
+      <a href="#" class="btn-dl-hero" onclick="downloadCV();return false;">↓ Download CV</a>
+    </div>
+  </div>
+
+  <!-- Sticky info card -->
+  <div class="info-card">
+    <div class="info-card-header">
+      <h3>Contact</h3>
+      <span class="avail-pill">● Available Now</span>
+    </div>
+    <div class="contact-row">
+      <div class="c-icon">✉</div>
+      <div><div class="c-label">Email</div><div class="c-val"><a href="mailto:sriarpa.jan@gmail.com">sriarpa.jan@gmail.com</a></div></div>
+    </div>
+    <div class="contact-row">
+      <div class="c-icon">📞</div>
+      <div><div class="c-label">Phone</div><div class="c-val"><a href="tel:+66899514428">+66 89 951 4428</a></div></div>
+    </div>
+    <div class="contact-row">
+      <div class="c-icon" style="font-size:10px;font-weight:700;color:var(--accent2)">in</div>
+      <div><div class="c-label">LinkedIn</div><div class="c-val"><a href="https://www.linkedin.com/in/sriarpa-janlakha/" target="_blank">sriarpa-janlakha</a></div></div>
+    </div>
+    <div class="contact-row">
+      <div class="c-icon">◎</div>
+      <div><div class="c-label">Behance</div><div class="c-val"><a href="https://www.behance.net/sriarpa" target="_blank">behance.net/sriarpa</a></div></div>
+    </div>
+    <div class="avail-section">
+      <div class="avail-row"><span class="avail-key">Location</span><span class="avail-val">Bangkok, Thailand</span></div>
+      <div class="avail-row"><span class="avail-key">Seeking</span><span class="avail-val" style="color:var(--green)">Full-Time ✓</span></div>
+      <div class="avail-row"><span class="avail-key">Relocation</span><span class="avail-val" style="color:var(--green)">Open ✓</span></div>
+      <div class="avail-row"><span class="avail-key">Remote</span><span class="avail-val" style="color:var(--green)">Available ✓</span></div>
+    </div>
+    <button class="dl-card-btn" onclick="downloadCV()">↓ Download CV (PDF)</button>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <div class="section-title">Experience</div>
+  <div class="exp-list">
+
+    <!-- 1 · Liquid Ledger -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Mar 2023 — Present</div>
+        <div class="exp-badges"><span class="badge badge-loc">Sydney AU</span><span class="badge badge-team">Remote</span><span class="badge badge-team">Web2/Web3</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Senior UI/UX Designer</div>
+        <div class="exp-company"><a href="https://liquidledger.io/" target="_blank" style="color:var(--text)">Liquid Ledger</a></div>
+        <div class="exp-company-sub">Bespoke Product Studio · Software Development</div>
+        <ul class="exp-achievements">
+          <li><strong>Launched</strong> tech education platform for the Glitch event in Korea, expanding digital reach for partner workshops.</li>
+          <li><strong>Delivered</strong> responsive landing pages for new product releases, improving cross-device accessibility and engagement.</li>
+          <li><strong>Created</strong> brand guidelines and design systems that streamlined design-to-development handoff.</li>
+          <li><strong>Produced</strong> promotional videos, event banners, and marketing graphics boosting campaign visibility.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2 · Kosmo -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Oct 2022 — Jan 2023</div>
+        <div class="exp-badges"><span class="badge badge-loc">Singapore</span><span class="badge badge-team">Remote</span><span class="badge badge-team">Logistics/API</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Senior UI/UX Designer</div>
+        <div class="exp-company">Kosmo Tech Pte. Ltd.</div>
+        <div class="exp-company-sub">Technology, Information and API Integration</div>
+        <ul class="exp-achievements">
+          <li><strong>Launched</strong> Bulk Upload, Optimized Routes, and Auto-Assign Driver — end-to-end from ideation to delivery.</li>
+          <li><strong>Improved</strong> operational efficiency across logistics workflows through targeted UX interventions.</li>
+          <li><strong>Collaborated</strong> with stakeholders, developers, and cross-functional teams to ship impactful product solutions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3 · Maknet -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Dec 2021 — Aug 2022</div>
+        <div class="exp-badges"><span class="badge badge-loc">Thailand</span><span class="badge badge-team">Design Team</span><span class="badge badge-team">B2B Marketplace</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Senior UI/UX Designer</div>
+        <div class="exp-company">Maknet (Siam Makro)</div>
+        <div class="exp-company-sub">Technology, B2B Marketplace</div>
+        <ul class="exp-achievements">
+          <li><strong>Drove</strong> end-to-end design of multiple e-commerce features across a large-scale B2B platform.</li>
+          <li><strong>Led</strong> the full user interview process — script, data synthesis, solution design, and stakeholder presentations.</li>
+          <li><strong>Redesigned</strong> the UI component system, raising consistency and brand cohesion across product teams.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4 · Space Next Door -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jan 2021 — Dec 2021</div>
+        <div class="exp-badges"><span class="badge badge-loc">Singapore</span><span class="badge badge-team">Product Team</span><span class="badge badge-team">Real Estate</span></div>
+      </div>
+      <div>
+        <div class="exp-role">UI/UX Designer</div>
+        <div class="exp-company">Space Next Door</div>
+        <div class="exp-company-sub">Real Estate &amp; Self Storage · StorHub SG Subsidiary</div>
+        <ul class="exp-achievements">
+          <li><strong>Launched</strong> a new website improving online booking flow across desktop and mobile.</li>
+          <li><strong>Led</strong> user interviews across Singapore, Thailand, and Japan — integrating insights into iterative design.</li>
+          <li><strong>Adapted</strong> product for 3 distinct markets, including a partner website redesign tailored to Japan.</li>
+          <li><strong>Built</strong> a booking management app to streamline the experience for existing users.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5 · Ascend -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Feb 2020 — Jan 2021</div>
+        <div class="exp-badges"><span class="badge badge-loc">Thailand</span><span class="badge badge-team">Product Team</span><span class="badge badge-team">B2C Grocery</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Senior UI/UX Designer</div>
+        <div class="exp-company">Ascend Group</div>
+        <div class="exp-company-sub">Technology, B2C Grocery Online · WeFresh</div>
+        <ul class="exp-achievements">
+          <li><strong>Launched</strong> the B2C grocery app on a strict deadline, meeting business objectives at go-live.</li>
+          <li><strong>Led</strong> user research and design thinking workshops to synthesize insights into user-centred solutions.</li>
+          <li><strong>Expanded</strong> product strategy by designing new features to support B2B services.</li>
+          <li><strong>Designed</strong> the initial concept for an internal fulfillment app, enhancing shopper logistics efficiency.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 6 · Discova -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jan 2019 — Jan 2020</div>
+        <div class="exp-badges"><span class="badge badge-loc">Thailand</span><span class="badge badge-team">Regional Marketing</span><span class="badge badge-team">Travel & Tourism</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Graphic Designer</div>
+        <div class="exp-company">Discova</div>
+        <div class="exp-company-sub">Leisure, Travel &amp; Tourism</div>
+        <ul class="exp-achievements">
+          <li><strong>Produced</strong> marketing collateral and brand materials for a regional travel and tourism company.</li>
+          <li><strong>Designed</strong> campaign assets across print and digital channels for the Asia-Pacific market.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 7 · FOX -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">May 2015 — Dec 2018</div>
+        <div class="exp-badges"><span class="badge badge-loc">TH / HK</span><span class="badge badge-team">Production Team</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Motion Graphic Designer</div>
+        <div class="exp-company">FOX Networks Group Asia</div>
+        <div class="exp-company-sub">Entertainment, TV Production</div>
+      </div>
+    </div>
+
+    <!-- 8 · GMM Grammy -->
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jul 2009 — Apr 2015</div>
+        <div class="exp-badges"><span class="badge badge-loc">Thailand</span><span class="badge badge-team">Production Team</span></div>
+      </div>
+      <div>
+        <div class="exp-role">Motion Graphic Designer</div>
+        <div class="exp-company">GMM Grammy PLC</div>
+        <div class="exp-company-sub">Entertainment, TV Production</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<div class="port-section-bg" id="portfolio">
+  <div class="port-inner">
+    <div class="section-label">Work</div>
+    <div class="section-title">Selected Projects</div>
+    <div class="port-grid">
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-mekora" src="" alt="Liquid Ledger / Mekora"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">Web3</span><span class="port-tag">Design System</span><span class="port-tag">E-commerce</span></div>
+          <div class="port-title">Liquid Ledger — Bespoke Product Studio</div>
+          <div class="port-desc">Ongoing UX/UI for a Web2/Web3 product studio — brand identity, design systems, responsive pages, and the live Mekora fashion e-commerce platform (Australia).</div>
+          <div class="port-links">
+            <a href="https://liquidledger.io/" target="_blank" class="port-link">liquidledger.io →</a>
+            <a href="https://www.mekora.com/" target="_blank" class="port-link-sec">mekora.com ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-kosmo" src="" alt="Kosmo"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">UX/UI</span><span class="port-tag">Responsive</span><span class="port-tag">Logistics</span></div>
+          <div class="port-title">Kosmo — UX/UI &amp; Responsive Design</div>
+          <div class="port-desc">Designed Bulk Upload, Optimized Routes, and Auto-Assign Driver for a Singapore logistics API platform — improving last-mile operational efficiency end to end.</div>
+          <div class="port-links"><a href="https://www.behance.net/gallery/204248115/Kosmo-UXUI-Responsive-Design" target="_blank" class="port-link">View on Behance →</a></div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-maknet" src="" alt="Maknet"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">Prototyping</span><span class="port-tag">User Interview</span><span class="port-tag">B2B</span></div>
+          <div class="port-title">Maknet — Prototype &amp; User Research</div>
+          <div class="port-desc">Led the full research-to-prototype cycle for Maknet's "Shop in Shop" seller feature — interviews, synthesis, prototyping, and a redesigned UI component system.</div>
+          <div class="port-links"><a href="https://www.behance.net/gallery/201496377/Prototyping-Users-Interview-Seller" target="_blank" class="port-link">View on Behance →</a></div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-snd" src="" alt="Space Next Door"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">Responsive</span><span class="port-tag">Booking App</span><span class="port-tag">3 Markets</span></div>
+          <div class="port-title">Space Next Door — Website &amp; Booking App</div>
+          <div class="port-desc">Redesigned website and booking management app for StorHub's SG subsidiary — user-research driven, shipped across Singapore, Thailand, and Japan markets.</div>
+          <div class="port-links">
+            <a href="https://www.behance.net/gallery/127296201/Responsive-Design-SND-on-Mobile" target="_blank" class="port-link">Mobile →</a>
+            <a href="https://www.behance.net/gallery/128132163/SND-Booking-management-App" target="_blank" class="port-link-sec">Booking App →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-wefresh" src="" alt="WeFresh"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">B2C/B2B</span><span class="port-tag">Grocery</span><span class="port-tag">Merchant App</span></div>
+          <div class="port-title">WeFresh — Grocery Platform &amp; Merchant App</div>
+          <div class="port-desc">Launched B2C grocery website, merchant app, and B2B extension for Ascend Group under tight deadlines — full design lifecycle from research to shipped product.</div>
+          <div class="port-links">
+            <a href="https://www.behance.net/gallery/126779663/WeFresh-website-Grocery-online" target="_blank" class="port-link">Website →</a>
+            <a href="https://www.behance.net/gallery/117774099/WeFresh-Merchant-App-Close-the-dialog" target="_blank" class="port-link-sec">Merchant App →</a>
+            <a href="https://www.behance.net/gallery/117773647/B2B-Wefresh" target="_blank" class="port-link-sec">B2B →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="port-thumb"><img id="img-secretum" src="" alt="Secretum"></div>
+        <div class="port-body">
+          <div class="port-tags"><span class="port-tag">Web3</span><span class="port-tag">UX/UI</span><span class="port-tag">Responsive</span></div>
+          <div class="port-title">Secretum — Web3 Communication Platform</div>
+          <div class="port-desc">UX/UI design for a Solana-powered communication and trading platform — responsive interface architecture for a Web 3.0 audience.</div>
+          <div class="port-links"><a href="https://www.behance.net/gallery/201465953/Secretum-UXUI-Responsive-Design" target="_blank" class="port-link">View on Behance →</a></div>
+        </div>
+      </div>
+
+      <div class="port-card port-more" style="grid-column:1/-1">
+        <div class="port-more-inner">
+          <div class="big">More work on Behance</div>
+          <p>Browse the full portfolio — motion graphics, brand design, and additional UX/UI case studies.</p>
+          <a href="https://www.behance.net/sriarpa" target="_blank" class="btn-primary">behance.net/sriarpa →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-group"><div class="skill-group-title">UX Research</div><div class="skill-tags"><span class="skill-tag">Information Architecture</span><span class="skill-tag">User Research</span><span class="skill-tag">Persona</span><span class="skill-tag">Usability Testing</span><span class="skill-tag">Wireframing</span><span class="skill-tag">Prototyping</span><span class="skill-tag">User Interview</span><span class="skill-tag">User Flows</span><span class="skill-tag">Journey Mapping</span><span class="skill-tag">Insight Synthesis</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">UI &amp; Visual</div><div class="skill-tags"><span class="skill-tag">Design Systems</span><span class="skill-tag">Visual Design</span><span class="skill-tag">Mockup</span><span class="skill-tag">Typography</span><span class="skill-tag">Color Theory</span><span class="skill-tag">Layout</span><span class="skill-tag">Interaction Design</span><span class="skill-tag">Responsive Design</span><span class="skill-tag">Motion Design</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Tools</div><div class="skill-tags"><span class="skill-tag">Figma</span><span class="skill-tag">Miro</span><span class="skill-tag">Framer</span><span class="skill-tag">Overflow</span><span class="skill-tag">Zeplin</span><span class="skill-tag">Dovetail</span><span class="skill-tag">After Effects</span><span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">AI &amp; Innovation</div><div class="skill-tags"><span class="skill-tag">ChatGPT</span><span class="skill-tag">Midjourney</span><span class="skill-tag">Getimg.ai</span><span class="skill-tag">Florafauna</span><span class="skill-tag">Lumalabs.ai</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Domain Knowledge</div><div class="skill-tags"><span class="skill-tag">B2C/B2B E-commerce</span><span class="skill-tag">Grocery Online</span><span class="skill-tag">Real Estate</span><span class="skill-tag">API Platform</span><span class="skill-tag">Web2/Web3</span><span class="skill-tag">Logistics</span><span class="skill-tag">Travel &amp; Tourism</span></div></div>
+    <div class="skill-group"><div class="skill-group-title">Hobbies</div><div class="skill-tags"><span class="skill-tag">🥊 Boxing</span><span class="skill-tag">🎾 Padel</span><span class="skill-tag">🏋️ Gym</span><span class="skill-tag">📷 Photography</span><span class="skill-tag">✈️ Travel</span></div></div>
+  </div>
+</section>
+
+<!-- ═══ EDUCATION ═══ -->
+<section style="padding-top:0">
+  <div class="section-label">Background</div>
+  <div class="section-title">Education</div>
+  <div class="edu-card">
+    <div class="edu-icon">🎓</div>
+    <div>
+      <div class="edu-degree">Bachelor's Degree</div>
+      <div class="edu-school">Silpakorn University</div>
+      <div class="edu-field">Visual Communication Design · Faculty of Decorative Arts</div>
+      <div class="edu-period">2006 — 2009</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--border)">
+  <footer>
+    <div class="footer-left">
+      <div class="name">Sriarpa Janlakha (May)</div>
+      <div class="tag">Senior UI/UX Designer · Bangkok / Open to Full-Time &amp; Relocation</div>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:sriarpa.jan@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/sriarpa-janlakha/" target="_blank">LinkedIn</a>
+      <a href="https://www.behance.net/sriarpa" target="_blank">Behance</a>
+      <a href="#" onclick="downloadCV();return false;">Download CV</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ── TICKER ── */
+const skills=["Design Systems","User Research","Figma","Prototyping","Interaction Design","Journey Mapping","Visual Design","After Effects","Midjourney","Wireframing","Responsive Design","Usability Testing","Information Architecture","Motion Design","AI Workflows","Brand Guidelines","Cross-functional Collaboration","B2B/B2C E-commerce","Web3 Design","Logistics UX"];
+const t=document.getElementById('ticker');
+const items=[...skills,...skills].map(s=>`<span class="tick-item"><span class="tick-dot"></span>${s}</span>`).join('');
+t.innerHTML=items+items;
+
+/* ── IMAGE DROP ── */
+const stored={};
+document.querySelectorAll('.drop-zone input[type=file]').forEach(inp=>{
+  inp.addEventListener('change',e=>{
+    const file=e.target.files[0]; if(!file)return;
+    const key=inp.dataset.key;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      stored[key]=ev.target.result;
+      const zone=inp.closest('.drop-zone');
+      zone.querySelector('img.preview').src=ev.target.result;
+      zone.classList.add('done');
+      zone.querySelector('.dz-hint').textContent='✓ Loaded';
+      const n=Object.keys(stored).length;
+      document.getElementById('setup-count').textContent=n+' / 6 loaded';
+      if(n===6) document.getElementById('setup-done-btn').classList.add('ready');
+    };
+    reader.readAsDataURL(file);
+  });
+  const zone=inp.closest('.drop-zone');
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over')});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');inp.files=e.dataTransfer.files;inp.dispatchEvent(new Event('change'))});
+});
+
+function applyImages(){
+  const map={mekora:'img-mekora',kosmo:'img-kosmo',maknet:'img-maknet',snd:'img-snd',wefresh:'img-wefresh',secretum:'img-secretum'};
+  Object.entries(map).forEach(([k,id])=>{if(stored[k])document.getElementById(id).src=stored[k]});
+  document.getElementById('setup-panel').style.display='none';
+}
+
+/* ── CV DOWNLOAD ── */
+function downloadCV(){
+  /* Replace the src below with your actual hosted PDF URL,
+     e.g. a Google Drive direct-download link or any public URL.
+     Format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID */
+  const pdfUrl='https://drive.google.com/uc?export=download&id=1e79MzoqA4IbLsQNffDhlfu26YUTowB-s';
+  const a=document.createElement('a');
+  a.href=pdfUrl; a.download='Sriarpa_Janlakha_CV.pdf'; a.click();
+}
+</script>
+</body>
+</html>
